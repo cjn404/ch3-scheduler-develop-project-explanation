@@ -2,6 +2,8 @@ package org.example.ch3schedulerdevelopprojectexplanation.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.ch3schedulerdevelopprojectexplanation.common.config.PasswordEncoder;
+import org.example.ch3schedulerdevelopprojectexplanation.common.exception.InvalidCredentialException;
+import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.LoginRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.UserSaveRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.UserUpdateRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.response.UserResponseDto;
@@ -95,5 +97,16 @@ public class UserService {
     @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Long handleLogin(LoginRequestDto dto) {
+        User user = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new InvalidCredentialException("해당 이메일이 존재하지 않습니다.")
+                );
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialException("비밀번호가 일치하지 않습니다.");
+        }
+        return user.getId();
     }
 }
