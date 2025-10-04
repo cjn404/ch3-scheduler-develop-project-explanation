@@ -31,6 +31,14 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    private User(Long id) {
+        this.id = id;
+    }
+
+    public static User from(Long id) {
+        return new User(id);
+    }
+
     public void update(
             String userName,
             String email,
