@@ -59,15 +59,4 @@ public class UserController {
         session.invalidate();
         return ResponseEntity.ok().build();
     }
-
-    @Transactional(readOnly = true)
-    public Long handleLogin(LoginRequestDto dto) {
-        User user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일이 존재하지 않습니다."));
-
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new InvalidCredentialException("비밀번호가 일치하지 않습니다.");
-        }
-        return user.getId();
-    }
 }
