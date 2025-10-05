@@ -56,4 +56,18 @@ public class ScheduleService {
         }
         return dtos;
     }
+
+    @Transactional(readOnly = true)
+    public ScheduleResponseDto findOne(Long id) {
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 스케줄이 존재하지 않습니다."));
+        return new ScheduleResponseDto(
+                schedule.getId(),
+                schedule.getUser().getId(),
+                schedule.getTitle(),
+                schedule.getContent(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt()
+        );
+    }
 }

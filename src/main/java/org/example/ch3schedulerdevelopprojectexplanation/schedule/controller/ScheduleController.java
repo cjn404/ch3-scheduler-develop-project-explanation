@@ -30,4 +30,11 @@ public class ScheduleController {
     public ResponseEntity<List<ScheduleResponseDto>> findAll() {
         return ResponseEntity.ok(scheduleService.findAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> findOne(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(scheduleService.findOne(id));
+    }
 }
