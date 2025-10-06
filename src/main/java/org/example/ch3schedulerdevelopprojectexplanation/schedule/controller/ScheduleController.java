@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.ch3schedulerdevelopprojectexplanation.common.consts.Const;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.request.ScheduleSaveRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.request.ScheduleUpdateRequestDto;
+import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.response.SchedulePageResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.response.ScheduleResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.response.ScheduleSaveResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.dto.response.ScheduleUpdateResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.schedule.service.ScheduleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,5 +58,15 @@ public class ScheduleController {
     ) {
       scheduleService.deleteById(id, userId);
       return ResponseEntity.ok().build();
+    }
+
+    // 일정 페이지 API
+    @GetMapping("/page")
+    public ResponseEntity<Page<SchedulePageResponseDto>> findAllPage(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<SchedulePageResponseDto> result = scheduleService.findAllPage(page, size);
+        return ResponseEntity.ok(result);
     }
 }
