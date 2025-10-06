@@ -93,4 +93,14 @@ public class ScheduleService {
                 schedule.getUpdatedAt()
         );
     }
+
+    @Transactional
+    public void deleteById(Long scheduleId, Long userId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 스케줄이 존재하지 않습니다."));
+        if (!userId.equals(schedule.getUser().getId())) {
+            throw new IllegalArgumentException("본인이 작성한 스케줄만 삭제할 수 있습니다.");
+        }
+        scheduleRepository.delete(schedule);
+    }
 }

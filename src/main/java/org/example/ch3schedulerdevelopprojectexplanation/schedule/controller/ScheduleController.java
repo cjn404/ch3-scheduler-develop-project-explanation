@@ -48,4 +48,13 @@ public class ScheduleController {
     ) {
         return ResponseEntity.ok(scheduleService.update(id, userId, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @SessionAttribute(name = Const.LOGIN_USER) Long userId,
+            @PathVariable Long id
+    ) {
+      scheduleService.deleteById(id, userId);
+      return ResponseEntity.ok().build();
+    }
 }
