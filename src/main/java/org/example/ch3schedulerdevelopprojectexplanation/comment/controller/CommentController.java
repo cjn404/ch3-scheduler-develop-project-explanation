@@ -29,4 +29,9 @@ public class CommentController {
     public ResponseEntity<List<CommentResponseDto>> findBySchedule(@PathVariable Long scheduleId) {
         return ResponseEntity.ok(commentService.findBySchedule(scheduleId));
     }
+
+    @GetMapping("/comments/{id}")
+    public ResponseEntity<CommentResponseDto> findOne(@PathVariable Long id) {
+        return ResponseEntity.ok(commentService.findOne(id));
+    }
 }
