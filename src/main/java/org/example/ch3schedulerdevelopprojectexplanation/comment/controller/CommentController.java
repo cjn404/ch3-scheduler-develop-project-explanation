@@ -8,6 +8,8 @@ import org.example.ch3schedulerdevelopprojectexplanation.common.consts.Const;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
@@ -21,5 +23,10 @@ public class CommentController {
             @RequestBody CommentSaveRequestDto dto
     ) {
         return ResponseEntity.ok(commentService.save(userId, scheduleId, dto));
+    }
+
+    @GetMapping("/schedules/{scheduleId}/comments")
+    public ResponseEntity<List<CommentResponseDto>> findBySchedule(@PathVariable Long scheduleId) {
+        return ResponseEntity.ok(commentService.findBySchedule(scheduleId));
     }
 }

@@ -16,4 +16,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             GROUP BY c.schedule.id
             """)
     List<CommentCountDto> countByScheduleIds(List<Long> scheduleIds);
+
+    List<Comment> findByScheduleId(Long scheduleId);
 }

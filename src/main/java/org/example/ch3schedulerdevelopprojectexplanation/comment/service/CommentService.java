@@ -12,6 +12,9 @@ import org.example.ch3schedulerdevelopprojectexplanation.user.repository.UserRep
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -26,9 +29,9 @@ public class CommentService {
             Long scheduleId,
             CommentSaveRequestDto dto) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(()-> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
         User user = userRepository.findById(userId)
-                .orElseThrow(()-> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
         Comment comment = new Comment(
                 schedule,
                 user,
@@ -43,5 +46,23 @@ public class CommentService {
                 comment.getCreatedAt(),
                 comment.getUpdatedAt()
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<CommentResponseDto> findBySchedule(Long scheduleId) {
+        List<Comment> comments = commentRepository.findByScheduleId(scheduleId);
+        List<CommentResponseDto> dtos = new ArrayList<>();
+        for (Comment comment : comments) {
+            CommentResponseDto dto = new CommentResponseDto(
+                    comment.getId(),
+                    comment.getUser().getId(),
+                    comment.getSchedule().getId(),
+                    comment.getContent(),
+                    comment.getCreatedAt(),
+                    comment.getUpdatedAt()
+            );
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }
