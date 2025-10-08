@@ -1,7 +1,6 @@
 package org.example.ch3schedulerdevelopprojectexplanation.user.dto.response;
 
 import lombok.Getter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 

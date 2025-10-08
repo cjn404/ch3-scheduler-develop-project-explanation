@@ -3,18 +3,12 @@ package org.example.ch3schedulerdevelopprojectexplanation.user.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.ch3schedulerdevelopprojectexplanation.common.config.PasswordEncoder;
 import org.example.ch3schedulerdevelopprojectexplanation.common.consts.Const;
-import org.example.ch3schedulerdevelopprojectexplanation.common.exception.InvalidCredentialException;
-import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.LoginRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.UserSaveRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.request.UserUpdateRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.user.dto.response.UserResponseDto;
-import org.example.ch3schedulerdevelopprojectexplanation.user.entity.User;
-import org.example.ch3schedulerdevelopprojectexplanation.user.repository.UserRepository;
 import org.example.ch3schedulerdevelopprojectexplanation.user.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +19,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSaveRequestDto dto) {

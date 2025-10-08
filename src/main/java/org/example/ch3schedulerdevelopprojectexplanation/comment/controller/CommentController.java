@@ -1,7 +1,6 @@
 package org.example.ch3schedulerdevelopprojectexplanation.comment.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentSaveRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentUpdateRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.response.CommentResponseDto;
