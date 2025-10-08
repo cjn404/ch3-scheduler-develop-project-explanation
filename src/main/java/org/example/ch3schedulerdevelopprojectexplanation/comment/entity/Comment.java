@@ -1,6 +1,7 @@
 package org.example.ch3schedulerdevelopprojectexplanation.comment.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.ch3schedulerdevelopprojectexplanation.common.entity.BaseEntity;
@@ -9,7 +10,7 @@ import org.example.ch3schedulerdevelopprojectexplanation.user.entity.User;
 
 @Getter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends BaseEntity {
 
     @Id

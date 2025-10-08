@@ -1,6 +1,7 @@
 package org.example.ch3schedulerdevelopprojectexplanation.schedule.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.ch3schedulerdevelopprojectexplanation.common.entity.BaseEntity;
@@ -8,7 +9,7 @@ import org.example.ch3schedulerdevelopprojectexplanation.user.entity.User;
 
 @Getter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "schedules")
 public class Schedule extends BaseEntity {
 
