@@ -1,7 +1,9 @@
 package org.example.ch3schedulerdevelopprojectexplanation.comment.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentSaveRequestDto;
+import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentUpdateRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.response.CommentResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.service.CommentService;
 import org.example.ch3schedulerdevelopprojectexplanation.common.consts.Const;
@@ -33,5 +35,14 @@ public class CommentController {
     @GetMapping("/comments/{id}")
     public ResponseEntity<CommentResponseDto> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(commentService.findOne(id));
+    }
+
+    @PutMapping("/comments/{id}")
+    public ResponseEntity<CommentResponseDto> update(
+            @SessionAttribute(name = Const.LOGIN_USER) Long userId,
+            @PathVariable Long id,
+            @RequestBody CommentUpdateRequestDto dto
+    ) {
+        return ResponseEntity.ok(commentService.update(id, userId, dto));
     }
 }

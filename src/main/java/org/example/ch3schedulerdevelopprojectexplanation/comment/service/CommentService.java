@@ -2,6 +2,7 @@ package org.example.ch3schedulerdevelopprojectexplanation.comment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentSaveRequestDto;
+import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.request.CommentUpdateRequestDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.dto.response.CommentResponseDto;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.entity.Comment;
 import org.example.ch3schedulerdevelopprojectexplanation.comment.repository.CommentRepository;
@@ -70,6 +71,28 @@ public class CommentService {
     public CommentResponseDto findOne(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+        return new CommentResponseDto(
+                comment.getId(),
+                comment.getUser().getId(),
+                comment.getSchedule().getId(),
+                comment.getContent(),
+                comment.getCreatedAt(),
+                comment.getUpdatedAt()
+        );
+    }
+
+    @Transactional
+    public CommentResponseDto update(
+            Long commentId,
+            Long userId,
+            CommentUpdateRequestDto dto
+    ) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+        if (!comment.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("본인이 작성한 댓글만 수정할 수 있습니다.");
+        }
+        comment.update(dto.getContent());
         return new CommentResponseDto(
                 comment.getId(),
                 comment.getUser().getId(),
