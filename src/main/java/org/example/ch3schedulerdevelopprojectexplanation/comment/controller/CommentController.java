@@ -45,4 +45,13 @@ public class CommentController {
     ) {
         return ResponseEntity.ok(commentService.update(id, userId, dto));
     }
+
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<Void> delete(
+            @SessionAttribute(name = Const.LOGIN_USER) Long userId,
+            @PathVariable Long id
+    ) {
+        commentService.delete(id, userId);
+        return ResponseEntity.noContent().build();
+    }
 }
